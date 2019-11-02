@@ -1,0 +1,3 @@
+include ':app'
+rootProject.name='Meeting2Progress'
+include ':openCVLibrary345'
