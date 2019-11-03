@@ -53,7 +53,9 @@ import java.text.DecimalFormat;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * Main activity
+ */
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
     LinearLayout mFloatLayout;
     private static final String TAG = "xxinput";
@@ -96,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.content_main);
 
         cursor = findViewById(R.id.cursor);
 
