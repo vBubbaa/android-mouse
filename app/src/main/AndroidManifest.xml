@@ -3,12 +3,12 @@
     package="com.tylerjames.meeting2progress">
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <uses-feature android:name="android.hardware.camera" android:required="false"/>
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
     <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
     <uses-feature android:name="android.hardware.camera.front.autofocus" android:required="false"/>
-    <uses-feature android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:allowBackup="true"
@@ -37,6 +37,10 @@
                 android:name="android.accessibilityservice"
                 android:resource="@xml/mouse_accessability_config" />
         </service>
+        <service
+            android:name=".CursorService"
+            android:enabled="true"
+            android:exported="false"></service>
     </application>
 
 </manifest>

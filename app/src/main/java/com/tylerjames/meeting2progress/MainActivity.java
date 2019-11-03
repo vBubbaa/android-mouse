@@ -1,34 +1,23 @@
 package com.tylerjames.meeting2progress;
 
-import android.accessibilityservice.AccessibilityService;
-import android.accessibilityservice.GestureDescription;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Path;
-import android.graphics.PointF;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.*;
 import android.os.SystemClock;
-import android.text.style.TtsSpan;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.View;
-import android.view.accessibility.AccessibilityEvent;
-import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -49,15 +38,12 @@ import org.opencv.objdetect.CascadeClassifier;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.text.DecimalFormat;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
- * Main activity
+ *
  */
+
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
-    LinearLayout mFloatLayout;
     private static final String TAG = "xxinput";
     //private static final String TAG = MainActivity.class.getSimpleName();
     // Allows camera to start and to process each frame
@@ -75,6 +61,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     public static int centerX;
     public static int centerY;
+
+    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
 
     // Cursor object
     private ImageView cursor;
@@ -100,6 +88,14 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_main);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            //If the draw over permission is not available open the settings screen
+            //to grant the permission.
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
+        } else initializeView();
+
         cursor = findViewById(R.id.cursor);
 
         // Gets the java camera view
@@ -114,12 +110,12 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         // Set it to invisible, but still running
         cameraBridgeViewBase.setAlpha(0);
 
-        // starts the accessability service for android (allowing clicking)
-        startService(new Intent(this, MouseAccessabilityService.class));
+        // Start button
+        Button startButton;
+        startButton = (Button)findViewById(R.id.buttonShow);
 
-        // Mouse accessability custom class object
-        final MouseAccessabilityService mMouseAccessabilityService = new MouseAccessabilityService();
 
+        // Click signal
         Buttonclick = (Button)findViewById(R.id.clickbutton);
 
         Buttonclick.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +154,34 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 }
             }
         };
+    }
 
+    private void initializeView() {
+        findViewById(R.id.buttonShow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startService(new Intent(MainActivity.this, CursorService.class));
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
+            //Check if the permission is granted or not.
+            if (resultCode == RESULT_OK) {
+                initializeView();
+            } else { //Permission is not available
+                Toast.makeText(this,
+                        "Draw over other app permission not available. Closing the application",
+                        Toast.LENGTH_SHORT).show();
+
+                finish();
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     private void autoClick(Integer paramX, Integer paramY) {
