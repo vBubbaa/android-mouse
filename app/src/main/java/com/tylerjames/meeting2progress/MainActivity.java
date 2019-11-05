@@ -2,6 +2,7 @@ package com.tylerjames.meeting2progress;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public void moveCursor(Integer paramX, Integer paramY) {
         x = paramX;
         y = paramY;
+        x2 = x2 -75;
+        y2 = y2 +295;
 
         cursor.setX(x);
         cursor.setY(y);
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.content_main);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
@@ -189,6 +193,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         long eventTime = SystemClock.uptimeMillis();
         x2 = paramX;
         y2 = paramY;
+        x2 = x2 -75;
+        y2 = y2 +225;
 
         int metaState = 0;
         final MotionEvent keyDown = MotionEvent.obtain(
@@ -295,6 +301,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void run() {
+                        centerX = centerX-140;
+                        centerY = centerY+75;
                         moveCursor(centerX, centerY);
 
                     }

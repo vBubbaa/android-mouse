@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
+    android:screenOrientation="portrait">
     >
 
     <ImageView
@@ -24,8 +25,10 @@
         android:alpha="0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></org.opencv.android.JavaCameraView>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"></org.opencv.android.JavaCameraView>
 
     <Button
         android:id="@+id/mybutton"
@@ -43,18 +46,18 @@
         android:text="Button"
         app:layout_constraintBottom_toBottomOf="@+id/CameraView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025" />
+        app:layout_constraintVertical_bias="0.949" />
 
     <Button
         android:id="@+id/buttonShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show"
-        tools:layout_editor_absoluteX="188dp"
-        tools:layout_editor_absoluteY="313dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="151dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
