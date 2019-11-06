@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     Button cursedbutton;
 
     public int alphaval = 0;
-
+    public int clicktoggle =0;
     // The opencv face classifier
     private CascadeClassifier cascadeClassifier;
 
@@ -133,7 +133,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             public void onClick(View view) {
 
                 Log.e("TAG", Float.toString(changeButtonText.getX()) + Float.toString(changeButtonText.getY()));
-                autoClick(centerX, centerY);
+
+                    autoClick(centerX, centerY);
+
+
             }
         });
 
@@ -141,17 +144,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         changeButtonText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-            }
-        });
-
-        cursedbutton = (Button)findViewById(R.id.cursorbutton);
-
-        cursedbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+                toastMsg("Clicked");
 
 
             }
@@ -221,8 +214,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         long eventTime = SystemClock.uptimeMillis();
         x2 = paramX;
         y2 = paramY;
-        x2 = x2 -75;
-        y2 = y2 +410;
+        x2 = x2 -295;
+        y2 = y2 +325;
 
         int metaState = 0;
         final MotionEvent keyDown = MotionEvent.obtain(
@@ -252,9 +245,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Log.i(TAG, "Click");
 
     }
-
-
-
     // Init all of the classifiers that we used through opencv (found in R.raw)
     // Load the classifiers
     // Catch any errors loading them
@@ -387,5 +377,13 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         if (cameraBridgeViewBase!=null){
             cameraBridgeViewBase.disableView();
         }
+    }
+    //toast message after button is clicked
+    public void toastMsg(String msg) {
+        Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        toast.show();
+    }
+    public void displayToastMsg(View view) {
+        toastMsg("Clicked");
     }
 }
