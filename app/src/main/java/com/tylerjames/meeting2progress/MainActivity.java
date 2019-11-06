@@ -3,7 +3,6 @@ package com.tylerjames.meeting2progress;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,8 +16,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -53,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     Button Buttonclick;
     Button changeButtonText;
+    Button cursedbutton;
+
+    public int alphaval = 0;
 
     // The opencv face classifier
     private CascadeClassifier cascadeClassifier;
@@ -73,13 +77,14 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     int x2;
     int y2;
 
+
     int a=1;
     int b=0;
     public void moveCursor(Integer paramX, Integer paramY) {
         x = paramX;
         y = paramY;
-        x2 = x2 -75;
-        y2 = y2 +295;
+        x = x -295;
+        y = y +235;
 
         cursor.setX(x);
         cursor.setY(y);
@@ -112,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         cameraBridgeViewBase.setCvCameraViewListener(this);
 
         // Set it to invisible, but still running
-        cameraBridgeViewBase.setAlpha(0);
+        cameraBridgeViewBase.setAlpha(alphaval);
 
         // Start button
         Button startButton;
@@ -133,15 +138,38 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         });
 
         changeButtonText = (Button)findViewById(R.id.mybutton);
-
         changeButtonText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeButtonText.setText("Second Text");
-                //autoClick(centerX, centerY);
+
 
             }
         });
+
+        cursedbutton = (Button)findViewById(R.id.cursorbutton);
+
+        cursedbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+            }
+        });
+
+        Switch sw = (Switch) findViewById(R.id.switch1);
+        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    alphaval = 1;
+                } else {
+                    // The toggle is disabled
+                    alphaval = 0;
+                }
+            }
+        });
+
 
         // Checks that it all loaded properly, then enable the view if succes
         baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -194,7 +222,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         x2 = paramX;
         y2 = paramY;
         x2 = x2 -75;
-        y2 = y2 +225;
+        y2 = y2 +410;
 
         int metaState = 0;
         final MotionEvent keyDown = MotionEvent.obtain(
@@ -222,6 +250,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         keyUp.recycle();
 
         Log.i(TAG, "Click");
+
     }
 
 
@@ -257,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         // Now we start the view
         cameraBridgeViewBase.enableView();
         // Set it to invisible, but still running
-        cameraBridgeViewBase.setAlpha(0);
+        cameraBridgeViewBase.setAlpha(alphaval);
     }
 
 
@@ -266,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
 
         // Set it to invisible, but still running
-        cameraBridgeViewBase.setAlpha(0);
+        cameraBridgeViewBase.setAlpha(alphaval);
 
         Mat frame = inputFrame.rgba();
 
@@ -304,12 +333,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                         centerX = centerX-140;
                         centerY = centerY+75;
                         moveCursor(centerX, centerY);
-
                     }
                 },
-                1000
+                0000
         );
-
         return frame;
     }
 
@@ -321,19 +348,17 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         // The faces will be a 20% of the height of the screen
         absoluteFaceSize = (int) (height * 0.2);
         // Set it to invisible, but still running
-        cameraBridgeViewBase.setAlpha(0);
+        cameraBridgeViewBase.setAlpha(alphaval);
     }
 
     // Camera Stopped
     @Override
     public void onCameraViewStopped() {
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         // If there is a problem resuming the app
         if (!OpenCVLoader.initDebug()){
             Toast.makeText(getApplicationContext(),"There's a problem!", Toast.LENGTH_SHORT).show();

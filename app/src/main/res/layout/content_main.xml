@@ -13,7 +13,7 @@
         android:id="@+id/cursor"
         android:layout_width="50px"
         android:layout_height="50px"
-        android:elevation="500dp"
+        android:elevation="501dp"
         android:src="@drawable/circle1"
         tools:layout_editor_absoluteX="356dp"
         tools:layout_editor_absoluteY="172dp"></ImageView>
@@ -23,17 +23,18 @@
         android:layout_width="732dp"
         android:layout_height="362dp"
         android:alpha="0"
+        android:elevation="500dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"></org.opencv.android.JavaCameraView>
+        app:layout_constraintVertical_bias="0.441"></org.opencv.android.JavaCameraView>
 
     <Button
         android:id="@+id/mybutton"
-        android:layout_width="389dp"
-        android:layout_height="244dp"
+        android:layout_width="412dp"
+        android:layout_height="347dp"
         android:clickable="true"
         android:onClick="printStarter"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,21 +44,44 @@
         android:id="@+id/clickbutton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="@+id/CameraView"
+        android:text="Click"
+        app:layout_constraintBottom_toTopOf="@+id/buttonShow"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.949" />
+        app:layout_constraintVertical_bias="0.974" />
 
     <Button
         android:id="@+id/buttonShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show"
+        android:layout_marginBottom="96dp"
+        android:text="Show Overlay"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="151dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/cursorbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cursor Start/Stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonShow" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="144dp"
+        android:elevation="500dp"
+        android:text="Camera View"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
