@@ -341,6 +341,11 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         cameraBridgeViewBase.setAlpha(alphaval);
     }
 
+    // Gets the current state of the cursor coordinates
+    public static int[] getCoords() {
+        return new int[] {centerX, centerY};
+    }
+
     // Camera Stopped
     @Override
     public void onCameraViewStopped() {
