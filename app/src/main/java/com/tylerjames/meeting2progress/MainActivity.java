@@ -42,7 +42,11 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 /**
- *
+ * Main activity of the application
+ * Implements OpenCV methods for facial tracking
+ * Starts the overlay service
+ * Shows the facial tracking (if needed)
+ * Showcases click funcitonality
  */
 
 public class MainActivity extends AppCompatActivity implements CameraBridgeViewBase.CvCameraViewListener2{
@@ -80,6 +84,12 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     int a=1;
     int b=0;
+
+    /**
+     * For moving cursor in app to showcase click
+     * @param paramX
+     * @param paramY
+     */
     public void moveCursor(Integer paramX, Integer paramY) {
         x = paramX;
         y = paramY;
@@ -140,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             }
         });
 
+        // Toast when clicked on example button
         changeButtonText = (Button)findViewById(R.id.mybutton);
         changeButtonText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +161,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             }
         });
 
+        // Toggle for showing facial tracking
         Switch sw = (Switch) findViewById(R.id.switch1);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -181,6 +193,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         };
     }
 
+    // Starts the cursor service from the manifest
+    // Asks for a new intent and starts when button is clicked
     private void initializeView() {
         findViewById(R.id.buttonShow).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +205,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         });
     }
 
+    // If the draw over permission is OK, then start the initialization of cursor service
+    // Else toast that it needs that permission checked
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
