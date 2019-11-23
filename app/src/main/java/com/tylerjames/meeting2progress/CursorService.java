@@ -25,6 +25,8 @@ public class CursorService extends Service {
 
     private WindowManager.LayoutParams params;
 
+    private boolean running;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -64,15 +66,15 @@ public class CursorService extends Service {
 
         moveCursor();
 
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        moveCursor();
-                    }
-                },
-                1000
-        );
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        moveCursor();
+//                    }
+//                },
+//                1000
+//        );
     }
 
     // Starts a runnable handler thread so we can update the layout (cursor position)

@@ -52,12 +52,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     CameraBridgeViewBase cameraBridgeViewBase;
     BaseLoaderCallback baseLoaderCallback;
 
-    Button Buttonclick;
-    Button changeButtonText;
-    Button cursedbutton;
-
     public int alphaval = 0;
-    public int clicktoggle =0;
     // The opencv face classifier
     private CascadeClassifier cascadeClassifier;
 
@@ -67,8 +62,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public static int centerX;
     public static int centerY;
 
-    private static final int CODE_DRAW_OVER_OTHER_APP_PERMISSION = 2084;
-
     // Cursor object
     private ImageView cursor;
     // X and Y we will set to move the cursor in moveCursor()
@@ -77,14 +70,9 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     int x2;
     int y2;
 
-
-    int a=1;
-    int b=0;
     public void moveCursor(Integer paramX, Integer paramY) {
         x = paramX;
         y = paramY;
-        x = x -295;
-        y = y +235;
 
         cursor.setX(x);
         cursor.setY(y);
@@ -94,16 +82,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.content_main);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            //If the draw over permission is not available open the settings screen
-            //to grant the permission.
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, CODE_DRAW_OVER_OTHER_APP_PERMISSION);
-        } else initializeView();
 
         cursor = findViewById(R.id.cursor);
 
@@ -119,50 +99,56 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         // Set it to invisible, but still running
         cameraBridgeViewBase.setAlpha(alphaval);
 
-        // Start button
-        Button startButton;
-        startButton = (Button)findViewById(R.id.buttonShow);
+        // Buttons for navigation
 
+        // Gets the google button from the view
+        Button googleBtn = findViewById(R.id.googleBtn);
 
-        // Click signal
-        Buttonclick = (Button)findViewById(R.id.clickbutton);
-
-        Buttonclick.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-
-                Log.e("TAG", Float.toString(changeButtonText.getX()) + Float.toString(changeButtonText.getY()));
-
-                    autoClick(centerX, centerY);
-
-
+        // Onclick listener
+        googleBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Need to start a new intent for opening it in browser
+                Intent googleInt = new Intent();
+                googleInt.setAction(Intent.ACTION_VIEW);
+                googleInt.addCategory(Intent.CATEGORY_BROWSABLE);
+                googleInt.setData(Uri.parse("https://www.google.com/"));
+                // Start the intent which goes to google
+                startActivity(googleInt);
             }
         });
 
-        changeButtonText = (Button)findViewById(R.id.mybutton);
-        changeButtonText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toastMsg("Clicked");
-
-
+        Button redditBtn = findViewById(R.id.redditBtn);
+        redditBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent redditInt = new Intent();
+                redditInt.setAction(Intent.ACTION_VIEW);
+                redditInt.addCategory(Intent.CATEGORY_BROWSABLE);
+                redditInt.setData(Uri.parse("https://www.google.com/"));
+                startActivity(redditInt);
             }
         });
 
-        Switch sw = (Switch) findViewById(R.id.switch1);
-        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                    alphaval = 1;
-                } else {
-                    // The toggle is disabled
-                    alphaval = 0;
-                }
+        Button asuBtn = findViewById(R.id.asuBtn);
+        asuBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent asuInt = new Intent();
+                asuInt.setAction(Intent.ACTION_VIEW);
+                asuInt.addCategory(Intent.CATEGORY_BROWSABLE);
+                asuInt.setData(Uri.parse("https://www.google.com/"));
+                startActivity(asuInt);
             }
         });
 
+        Button youtubeBtn = findViewById(R.id.youtubeBtn);
+        youtubeBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent youtubeInt = new Intent();
+                youtubeInt.setAction(Intent.ACTION_VIEW);
+                youtubeInt.addCategory(Intent.CATEGORY_BROWSABLE);
+                youtubeInt.setData(Uri.parse("https://www.google.com/"));
+                startActivity(youtubeInt);
+            }
+        });
 
         // Checks that it all loaded properly, then enable the view if succes
         baseLoaderCallback = new BaseLoaderCallback(this) {
@@ -181,41 +167,11 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         };
     }
 
-    private void initializeView() {
-        findViewById(R.id.buttonShow).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startService(new Intent(MainActivity.this, CursorService.class));
-                finish();
-            }
-        });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CODE_DRAW_OVER_OTHER_APP_PERMISSION) {
-            //Check if the permission is granted or not.
-            if (resultCode == RESULT_OK) {
-                initializeView();
-            } else { //Permission is not available
-                Toast.makeText(this,
-                        "Draw over other app permission not available. Closing the application",
-                        Toast.LENGTH_SHORT).show();
-
-                finish();
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
-    }
-
     private void autoClick(Integer paramX, Integer paramY) {
         long downTime = SystemClock.uptimeMillis();
         long eventTime = SystemClock.uptimeMillis();
         x2 = paramX;
         y2 = paramY;
-        x2 = x2 -295;
-        y2 = y2 +325;
 
         int metaState = 0;
         final MotionEvent keyDown = MotionEvent.obtain(
@@ -304,8 +260,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Rect[] facesArray = faces.toArray();
 
         for (int i = 0; i < facesArray.length; i++) {
-            centerX = facesArray[i].x + facesArray[i].width / 2;
-            centerY = facesArray[i].y + facesArray[i].height / 2;
+            centerX = facesArray[i].width / 2;
+            centerY = facesArray[i].height / 2;
 
             Imgproc.circle(frame, new Point(centerX, centerY), 20, new Scalar(0, 255, 0, 255), 3);
             Imgproc.rectangle(frame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
@@ -320,8 +276,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public void run() {
-                        centerX = centerX-140;
-                        centerY = centerY+75;
                         moveCursor(centerX, centerY);
                     }
                 },
@@ -343,6 +297,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     // Gets the current state of the cursor coordinates
     public static int[] getCoords() {
+        Log.e("Main x/y", String.valueOf(centerX )+ " " + String.valueOf(centerY));
         return new int[] {centerX, centerY};
     }
 
