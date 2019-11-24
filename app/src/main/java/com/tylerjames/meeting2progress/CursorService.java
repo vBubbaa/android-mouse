@@ -25,28 +25,21 @@ public class CursorService extends Service {
 
     private WindowManager.LayoutParams params;
 
+    private boolean running;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
     }
 
-    /**
-     * The onCreate() method
-     * @params - none
-     * Builds and starts a layout view, that overlays the entire phone (over everything)
-     * Starts the cursor moving service found in moveCursor()
-     */
     @Override
     public void onCreate() {
         super.onCreate();
-
         //Inflate the floating view layout we created
         mFloatingView = LayoutInflater.from(this).inflate(R.layout.cursor_layout, null);
 
-        // Handler to help us process the cursor movement thread in the background
         handler = new Handler();
 
-        // Check phone version for correct flag to get layout to display correctly
         int LAYOUT_FLAG;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
@@ -55,7 +48,6 @@ public class CursorService extends Service {
         }
 
         //Add the view to the window.
-        // add the correct layout paramters
         params = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.WRAP_CONTENT,
@@ -72,16 +64,17 @@ public class CursorService extends Service {
         mWindowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         mWindowManager.addView(mFloatingView, params);
 
-        // Every 1 second it will call the movecursor function to move the cursor
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @Override
-                    public void run() {
-                        moveCursor();
-                    }
-                },
-                1000
-        );
+        moveCursor();
+
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @Override
+//                    public void run() {
+//                        moveCursor();
+//                    }
+//                },
+//                1000
+//        );
     }
 
     // Starts a runnable handler thread so we can update the layout (cursor position)
@@ -96,14 +89,11 @@ public class CursorService extends Service {
      * set the params to the x and y
      */
     public void moveCursor() {
-        // Allows us to update the layout outside of onCreate()
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // Main activity function to retrieve current X and y position
                 int[] coords = MainActivity.getCoords();
 
-                // Sets the cursor x and y to the pulled coords
                 params.x = coords[0];
                 params.y = coords[1];
                 Log.e("x: ", String.valueOf(params.x));
@@ -113,7 +103,6 @@ public class CursorService extends Service {
         });
     }
 
-    // Default method for destroying view.
     @Override
     public void onDestroy() {
         super.onDestroy();
