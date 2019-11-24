@@ -105,6 +105,12 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Button googleBtn = findViewById(R.id.googleBtn);
 
         // Onclick listener
+
+
+
+
+
+
         googleBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Need to start a new intent for opening it in browser
@@ -260,8 +266,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Rect[] facesArray = faces.toArray();
 
         for (int i = 0; i < facesArray.length; i++) {
-            centerX = facesArray[i].width / 2;
-            centerY = facesArray[i].height / 2;
+            centerX = facesArray[i].x + facesArray[i].width / 2;
+            centerY = facesArray[i].y + facesArray[i].height / 2;
 
             Imgproc.circle(frame, new Point(centerX, centerY), 20, new Scalar(0, 255, 0, 255), 3);
             Imgproc.rectangle(frame, facesArray[i].tl(), facesArray[i].br(), new Scalar(0, 255, 0, 255), 3);
