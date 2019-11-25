@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Handler;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
@@ -62,6 +63,17 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public static int centerX;
     public static int centerY;
 
+    public int startX;
+    public int startY;
+    public int startXUpperBound = startX + 7;
+    public int startXLowerBound = startX - 7;
+    public int startYUpperBound = startY + 7;
+    public int startYLowerBound = startY - 7;
+
+    // We will use the clickable boolean to determine if the x and y range is still "sitting still"
+    // If we determine that it is actually moving we will make it not click
+    boolean clickableTrue = false;
+
     // Cursor object
     private ImageView cursor;
     // X and Y we will set to move the cursor in moveCursor()
@@ -105,12 +117,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         Button googleBtn = findViewById(R.id.googleBtn);
 
         // Onclick listener
-
-
-
-
-
-
         googleBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Need to start a new intent for opening it in browser
@@ -156,6 +162,19 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             }
         });
 
+        // Every 3 seconds, call the clickcheck function to see if it sits still
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                startClickcheck();
+                handler.postDelayed(this, 3000);
+            }
+        };
+
+        //Start
+        handler.postDelayed(runnable, 3000);
+
         // Checks that it all loaded properly, then enable the view if succes
         baseLoaderCallback = new BaseLoaderCallback(this) {
             @Override
@@ -171,6 +190,43 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 }
             }
         };
+    }
+
+    /**
+     * This will run every 3 seconds
+     * it will monitor the x and y coords and see if they are in the same spot (approximately)
+     * if it is, it will call autoclick
+     */
+    private void startClickcheck() {
+        startX = centerX;
+        startY = centerY;
+
+        Log.e("xxxx", String.valueOf(startX));
+        Log.e("xxxx", String.valueOf(startY));
+
+        startXUpperBound = startX + 7;
+        startXLowerBound = startX - 7;
+
+        startYUpperBound = startY + 7;
+        startYLowerBound = startY - 7;
+
+        clickableTrue = false;
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if ((centerX < startXUpperBound && centerX > startXLowerBound) && (centerY < startYUpperBound && centerY > startYLowerBound)) {
+                    Log.e("xxxx", "TRUE");
+                    clickableTrue = true;
+                } else {
+                    clickableTrue = false;
+                    Log.e("xxxx", "FALSE");
+                }
+                if (clickableTrue == true) {
+                    autoClick(centerX, centerY);
+                }
+            }
+        }, 2800);
     }
 
     private void autoClick(Integer paramX, Integer paramY) {
