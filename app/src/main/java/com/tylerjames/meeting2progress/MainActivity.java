@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         super.onCreate(savedInstanceState);
         setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.content_main);
-
+        ConfigStartButton();
         cursor = findViewById(R.id.cursor);
 
         // Gets the java camera view
@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 googleInt.setData(Uri.parse("https://www.google.com/"));
                 // Start the intent which goes to google
                 startActivity(googleInt);
+                MainActivity.this.finish();
             }
         });
 
@@ -137,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 redditInt.addCategory(Intent.CATEGORY_BROWSABLE);
                 redditInt.setData(Uri.parse("https://www.google.com/"));
                 startActivity(redditInt);
+                MainActivity.this.finish();
             }
         });
 
@@ -148,6 +150,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 asuInt.addCategory(Intent.CATEGORY_BROWSABLE);
                 asuInt.setData(Uri.parse("https://www.google.com/"));
                 startActivity(asuInt);
+                MainActivity.this.finish();
             }
         });
 
@@ -159,6 +162,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 youtubeInt.addCategory(Intent.CATEGORY_BROWSABLE);
                 youtubeInt.setData(Uri.parse("https://www.google.com/"));
                 startActivity(youtubeInt);
+                MainActivity.this.finish();
             }
         });
 
@@ -190,6 +194,18 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                 }
             }
         };
+    }
+
+    private void ConfigStartButton() {
+
+        Button startbutton = (Button) findViewById(R.id.homebutton);
+        startbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, StartScreen.class));
+            }
+        });
+
     }
 
     /**
