@@ -7,25 +7,7 @@
     android:background="#73716d"
     android:screenOrientation="portrait"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"><![CDATA[
-    >
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    tools:context=".MainActivity"><![CDATA[>
     ]]>
 
     <Button
@@ -82,12 +64,12 @@
 
     <ImageView
         android:id="@+id/cursor"
-        android:layout_width="100px"
-        android:layout_height="100px"
+        android:layout_width="71dp"
+        android:layout_height="80dp"
         android:elevation="501dp"
-        android:src="@drawable/cursor"
+        android:src="@android:drawable/ic_input_add"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="356dp"
+        tools:layout_editor_absoluteX="323dp"
         tools:layout_editor_absoluteY="172dp"></ImageView>
 
     <org.opencv.android.JavaCameraView
@@ -108,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="501dp"
-        android:text="home"
+        android:text="STOP"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
