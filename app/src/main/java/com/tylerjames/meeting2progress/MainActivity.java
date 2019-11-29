@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     public void moveCursor(Integer paramX, Integer paramY) {
         x = paramX;
-        y = paramY;
+        y = paramY - 100;
 
         cursor.setX(x);
         cursor.setY(y);
@@ -130,37 +130,13 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
             }
         });
 
-        Button redditBtn = findViewById(R.id.redditBtn);
-        redditBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent redditInt = new Intent();
-                redditInt.setAction(Intent.ACTION_VIEW);
-                redditInt.addCategory(Intent.CATEGORY_BROWSABLE);
-                redditInt.setData(Uri.parse("https://www.google.com/"));
-                startActivity(redditInt);
-                MainActivity.this.finish();
-            }
-        });
-
-        Button asuBtn = findViewById(R.id.asuBtn);
-        asuBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent asuInt = new Intent();
-                asuInt.setAction(Intent.ACTION_VIEW);
-                asuInt.addCategory(Intent.CATEGORY_BROWSABLE);
-                asuInt.setData(Uri.parse("https://www.google.com/"));
-                startActivity(asuInt);
-                MainActivity.this.finish();
-            }
-        });
-
         Button youtubeBtn = findViewById(R.id.youtubeBtn);
         youtubeBtn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent youtubeInt = new Intent();
                 youtubeInt.setAction(Intent.ACTION_VIEW);
                 youtubeInt.addCategory(Intent.CATEGORY_BROWSABLE);
-                youtubeInt.setData(Uri.parse("https://www.google.com/"));
+                youtubeInt.setData(Uri.parse("https://www.youtube.com/"));
                 startActivity(youtubeInt);
                 MainActivity.this.finish();
             }
@@ -276,7 +252,8 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         keyDown.recycle();
         keyUp.recycle();
 
-        Log.i(TAG, "Click");
+        Log.e("CLICK", String.valueOf(x2));
+        Log.e("CLICK", String.valueOf(y2));
 
     }
     // Init all of the classifiers that we used through opencv (found in R.raw)
@@ -357,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
                         moveCursor(centerX, centerY);
                     }
                 },
-                0000
+                1000
         );
         return frame;
     }
@@ -420,8 +397,5 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public void toastMsg(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
         toast.show();
-    }
-    public void displayToastMsg(View view) {
-        toastMsg("Clicked");
     }
 }

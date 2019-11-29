@@ -8,12 +8,14 @@
     android:screenOrientation="portrait"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"><![CDATA[>
+
+
     ]]>
 
     <Button
         android:id="@+id/youtubeBtn"
-        android:layout_width="295dp"
-        android:layout_height="175dp"
+        android:layout_width="679dp"
+        android:layout_height="171dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="16dp"
@@ -21,44 +23,22 @@
         android:text="Youtube.com"
         android:textColor="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/asuBtn"
-        android:layout_width="295dp"
-        android:layout_height="175dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="#ffffff"
-        android:text="ASU.EDU"
-        android:textColor="#000000"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/redditBtn"
-        android:layout_width="295dp"
-        android:layout_height="175dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginRight="12dp"
-        android:background="#ffffff"
-        android:text="Reddit.com"
-        android:textColor="#000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/googleBtn"
-        android:layout_width="295dp"
-        android:layout_height="175dp"
+        android:layout_width="672dp"
+        android:layout_height="164dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:background="#ffffff"
         android:text="Google.com"
         android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
