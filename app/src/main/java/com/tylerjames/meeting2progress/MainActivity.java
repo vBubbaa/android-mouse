@@ -67,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     public int startX;
     public int startY;
-    public int startXUpperBound = startX + 7;
-    public int startXLowerBound = startX - 7;
-    public int startYUpperBound = startY + 7;
-    public int startYLowerBound = startY - 7;
+    public int startXUpperBound = startX + 10;
+    public int startXLowerBound = startX - 10;
+    public int startYUpperBound = startY + 10;
+    public int startYLowerBound = startY - 10;
 
     // We will use the clickable boolean to determine if the x and y range is still "sitting still"
     // If we determine that it is actually moving we will make it not click
@@ -86,10 +86,10 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     public void moveCursor(Integer paramX, Integer paramY) {
         x = paramX;
-        y = (paramY - 160);
+        y = (paramY - 350);
 
-        cursor.setX(x);
-        cursor.setY(y);
+        cursor.setX(x * 2);
+        cursor.setY(y * 2);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         moveCursor(centerX, centerY);
         Log.e("movement", "move");
 
-        SystemClock.sleep(100);
+        SystemClock.sleep(200);
         return frame;
     }
 
