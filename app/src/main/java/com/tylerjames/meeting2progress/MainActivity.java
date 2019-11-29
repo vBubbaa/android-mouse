@@ -1,5 +1,7 @@
 package com.tylerjames.meeting2progress;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
     public void moveCursor(Integer paramX, Integer paramY) {
         x = paramX;
-        y = paramY - 100;
+        y = (paramY - 160);
 
         cursor.setX(x);
         cursor.setY(y);
@@ -326,16 +328,21 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
 
         }
 
-        new java.util.Timer().schedule(
-                new java.util.TimerTask() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    @Override
-                    public void run() {
-                        moveCursor(centerX, centerY);
-                    }
-                },
-                1000
-        );
+//        new java.util.Timer().schedule(
+//                new java.util.TimerTask() {
+//                    @RequiresApi(api = Build.VERSION_CODES.N)
+//                    @Override
+//                    public void run() {
+//                        moveCursor(centerX, centerY);
+//                        Log.e("movement", "move");
+//                    }
+//                },
+//                1000
+//        );
+        moveCursor(centerX, centerY);
+        Log.e("movement", "move");
+
+        SystemClock.sleep(100);
         return frame;
     }
 
